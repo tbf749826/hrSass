@@ -264,6 +264,7 @@ module.exports = {
     ],
     'array-bracket-spacing': [2, 'never'],
     'vue/html-self-closing': 'off',
-    'space-before-function-paren': 'off'
+    'space-before-function-paren': 'off',
+    'no-extra-semi': 'off'
   }
 }
