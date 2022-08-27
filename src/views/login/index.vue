@@ -46,6 +46,7 @@
 
 <script>
 import { validMobile } from '@/utils/validate'
+import { mapActions } from 'vuex'
 // import {login}
 export default {
   name: 'Login',
@@ -53,13 +54,6 @@ export default {
     const validateMobile = (rule, value, callback) => {
       validMobile(value) ? callback() : callback(new Error('手机号格式不正确'))
     }
-    // const validatePassword = (rule, value, callback) => {
-    //   if (value.length < 6) {
-    //     callback(new Error('密码长度在6-16位之间'))
-    //   } else {
-    //     callback()
-    //   }
-    // }
     return {
       loginForm: {
         mobile: '13800000002',
@@ -89,6 +83,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['user/login']),
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -100,21 +95,15 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
+      this.$refs.loginForm.validate(async (isOK) => {
+        try {
           this.loading = true
-          this.$store
-            .dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/' })
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
-        } else {
-          console.log('error submit!!')
-          return false
+          await this['user/login'](this.loginForm)
+          this.$router.push('/')
+        } catch (err) {
+          console.log(err)
+        } finally {
+          this.loading = false
         }
       })
     }
