@@ -46,7 +46,14 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    Message.error(error.message)
+    // 服务端响应回来code是10002证明token过期了，将token和用户信息清空，并跳转到登录页
+    if (error.response && error.response.data && error.response.data.code === 10002) {
+      store.dispatch('user/logout')
+      router.push('/login')
+    } else {
+      Message.error(error.message)
+    }
+
     return Promise.reject(error)
   }
 )
