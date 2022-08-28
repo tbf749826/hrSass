@@ -1,5 +1,5 @@
 // 引入本地存储模块，持久化处理
-import { getToken, setToken, removeToken } from '@/utils/auth.js'
+import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth.js'
 import { login, getInfo, getUserDetailById } from '@/api/user.js'
 // 状态
 const state = {
@@ -32,6 +32,7 @@ const actions = {
     const results = await login(data)
     // 通过mutations将获取到的token 存到vuex中
     context.commit('SET_TOKEN', results)
+    setTimeStamp()
   },
   // 调用getUserInfo接口用于获取用户信息
   async getUserInfo(context) {

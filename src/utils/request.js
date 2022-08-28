@@ -2,6 +2,12 @@ import axios from 'axios'
 import store from '@/store'
 // 引入element-ui中的提示消息
 import { Message } from 'element-ui'
+
+import router from '@/router/index.js'
+
+import { getTimeStamp } from '@/utils/auth.js'
+
+const TimeOut = 3600
 // 自定义axios实例添加拦截器
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -13,6 +19,11 @@ service.interceptors.request.use(
     // config是请求的配置信息
     // 注入token
     if (store.getters.token) {
+      if (IsCheckTimeOut()) {
+        store.dispatch('user/logout')
+        router.push('/login')
+        return Promise.reject(new Error('Token过期了'))
+      }
       // 判断token在store中是否存在 如果有token将token放在请求头中
       config.headers['Authorization'] = `Bearer ${store.getters.token}`
     }
@@ -39,5 +50,12 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+function IsCheckTimeOut() {
+  const currentTime = Date.now()
+  const timestamp = getTimeStamp()
+
+  return (currentTime - timestamp) / 1000 > TimeOut
+}
 
 export default service
