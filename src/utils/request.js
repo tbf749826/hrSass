@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store'
 // 引入element-ui中的提示消息
 import { Message } from 'element-ui'
 // 自定义axios实例添加拦截器
@@ -7,7 +8,20 @@ const service = axios.create({
   timeout: 5000
 })
 // 添加请求拦截器
-service.interceptors.request.use()
+service.interceptors.request.use(
+  (config) => {
+    // config是请求的配置信息
+    // 注入token
+    if (store.getters.token) {
+      // 判断token在store中是否存在 如果有token将token放在请求头中
+      config.headers['Authorization'] = `Bearer ${store.getters.token}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 // 添加响应拦截器
 service.interceptors.response.use(
   (response) => {

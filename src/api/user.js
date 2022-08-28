@@ -13,6 +13,28 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {}
+/**
+ * 获取用户资料的接口
+ * @param {String} token需要在headers中存放token
+ * @returns Promise
+ */
+export function getInfo(token) {
+  return request({
+    url: '/sys/profile',
+    method: 'POST'
+  })
+}
+
+/**
+ * 获取员工基本信息（头像）
+ * @param {String}
+ * @returns
+ */
+export function getUserDetailById(id) {
+  return request({
+    url: `/sys/user/${id}`,
+    method: 'GET'
+  })
+}
 
 export function logout() {}

@@ -1,10 +1,12 @@
 // 引入本地存储模块，持久化处理
 import { getToken, setToken, removeToken } from '@/utils/auth.js'
-import { login } from '@/api/user.js'
+import { login, getInfo, getUserDetailById } from '@/api/user.js'
 // 状态
 const state = {
-  token: getToken() // 初始化的同时获取本地存储中的token
+  token: getToken(), // 初始化的同时获取本地存储中的token
   // 设置token为共享状态
+  // 用户信息
+  userInfo: {}
 }
 // 修改状态
 const mutations = {
@@ -12,9 +14,15 @@ const mutations = {
     state.token = token // 将用户的token存到vuex中
     setToken(token) // 设置token存储到本地
   },
-  removeToken(state) {
+  REMOVE_TOKEN(state) {
     state.token = null // 将vuex中的token置空
     removeToken() // 将本地存储中的token置空
+  },
+  SET_USER_INFO(state, payload) {
+    state.userInfo = payload
+  },
+  REMOVE_USER_INFO(state) {
+    state.userInfo = {}
   }
 }
 // 执行异步
@@ -24,6 +32,20 @@ const actions = {
     const results = await login(data)
     // 通过mutations将获取到的token 存到vuex中
     context.commit('SET_TOKEN', results)
+  },
+  // 调用getUserInfo接口用于获取用户信息
+  async getUserInfo(context) {
+    const result = await getInfo()
+    // 用户详情数据
+    const baseInfo = await getUserDetailById(result.userId)
+    context.commit('SET_USER_INFO', { ...result, ...baseInfo })
+    return result
+  },
+  logout(context) {
+    // 清空token
+    context.commit('REMOVE_TOKEN')
+    // 删除用户信息
+    context.commit('REMOVE_USER_INFO')
   }
 }
 

@@ -7,7 +7,7 @@ import 'nprogress/nprogress.css'
 const whiteList = ['/login', '/404']
 
 // 前置守卫  因为需要对路由进行权限验证所以需要使用路由守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   nprogress.start()
   if (store.getters.token) {
     console.log(store.getters.token)
@@ -17,6 +17,9 @@ router.beforeEach((to, from, next) => {
       next('/')
     } else {
       // 其他页面直接可以进入
+      if (!store.getters.userId) {
+        await store.dispatch('user/getUserInfo')
+      }
       next()
     }
   } else {
