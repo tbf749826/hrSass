@@ -10,7 +10,6 @@ const whiteList = ['/login', '/404']
 router.beforeEach(async (to, from, next) => {
   nprogress.start()
   if (store.getters.token) {
-    console.log(store.getters.token)
     // 有token
     // 如果访问登录页面直接跳转到首页
     if (to.path === '/login') {
