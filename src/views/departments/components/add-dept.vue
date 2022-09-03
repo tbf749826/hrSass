@@ -24,7 +24,7 @@
       <!-- 列被分为24 -->
       <el-col :span="6">
         <el-button type="primary" size="small" @click="btnOK">确定</el-button>
-        <el-button size="small">取消</el-button>
+        <el-button size="small" @click="btnCancel">取消</el-button>
       </el-col>
     </el-row>
   </el-dialog>
@@ -47,13 +47,25 @@ export default {
   data() {
     const checkNameRepeat = async (rule, value, callback) => {
       const { depts } = await getDepartments()
-      const isisRepeat = depts.filter((item) => item.pid === this.treeNode.id).some((item) => item.name === value)
+      let isRepeat = false
+      if (this.formData.id) {
+        isRepeat = depts.filter((item) => item.id !== this.formData.id && item.pid === this.treeNode.pid).some((item) => item.name === value)
+      } else {
+        isRepeat = depts.filter((item) => item.pid === this.treeNode.id).some((item) => item.name === value)
+      }
+
       isisRepeat ? callback(new Error(`同级部门下已经有${value}的部门了`)) : callback()
     }
 
     const checkCodeRepeat = async (rule, value, callback) => {
       const { depts } = await getDepartments()
-      const isRepeat = depts.some((item) => item.code === value && value)
+      const isRepeat = false
+      if (this.formData.id) {
+        isRepeat = depts.some((item) => item.id != this.formData.id && item.code === code && value)
+      } else {
+        isRepeat = depts.some((item) => item.code === value && value)
+      }
+
       isRepeat ? callback(new Error(`组织架构中已经有部门使用${value}编码`)) : callback()
     }
     return {
@@ -113,9 +125,12 @@ export default {
     btnCancel() {
       this.$refs.deptForm.resetFields() // 重置校验字段
       this.$emit('update:showDialog', false) // 关闭
+      console.log(formm)
     },
     async getDepartDetail(id) {
-      this.formData = await getDepartDetail(id)
+      // console.log(id)  // id能查询到
+      const result = await getDepartDetail(id)
+      this.formData = result
     }
   }
 }

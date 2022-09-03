@@ -46,11 +46,11 @@ export default {
   methods: {
     operateDepts(type) {
       if (type === 'add') {
-        // 添加部门
-        // alert(11)
+        // 添加部门git status
         this.$emit('addDepts', this.treeNode)
       } else if (type === 'edit') {
         // 修改部门
+        this.$emit('editDepts', this.treeNode)
       } else {
         // 删除部门
         this.$confirm('确定要删除部门吗？')

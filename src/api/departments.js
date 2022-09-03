@@ -34,12 +34,11 @@ export function addDepartments(data) {
   })
 }
 
-/**
- * 根据ID查询部门详情
- * @return Promise
- */
+/** *
+ * 获取部门详情
+ * ***/
 export function getDepartDetail(id) {
-  request({
+  return request({
     url: `/company/department/${id}`
   })
 }
