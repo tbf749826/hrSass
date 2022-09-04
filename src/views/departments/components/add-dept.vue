@@ -54,7 +54,7 @@ export default {
         isRepeat = depts.filter((item) => item.pid === this.treeNode.id).some((item) => item.name === value)
       }
 
-      isisRepeat ? callback(new Error(`同级部门下已经有${value}的部门了`)) : callback()
+      isRepeat ? callback(new Error(`同级部门下已经有${value}的部门了`)) : callback()
     }
 
     const checkCodeRepeat = async (rule, value, callback) => {
