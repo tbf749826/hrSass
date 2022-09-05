@@ -25,7 +25,7 @@
             <!-- 分页组件 -->
             <el-row type="flex" justify="center" align="middle" style="height: 60px">
               <!-- 分页组件 -->
-              <el-pagination :current-page="page.page" :page-size="page.pagesize" :total="page.total" layout="prev, pager, next" @current-change="changePage" />
+              <el-pagination :current-page="page.page" :page-size="page.pagesize" :total="page.total" layout="prev,pager,next" @current-change="changePage" />
             </el-row>
           </el-tab-pane>
           <el-tab-pane label="公司信息">
@@ -96,11 +96,11 @@ export default {
       const { total, rows } = await getRoleList(this.page)
       this.page.total = total
       this.list = rows
-    },
+    }, // 换页
     changePage(newPage) {
       // newPage是当前点击的页码
       this.page.page = newPage // 将当前页码赋值给当前的最新页码
-      this.getRoleList()
+      this.getRoleList() // 更换页码时 重新调用方法渲染页面
     },
     // 获取用户信息
     async getCompanyInfo() {

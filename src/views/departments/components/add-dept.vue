@@ -125,7 +125,6 @@ export default {
     btnCancel() {
       this.$refs.deptForm.resetFields() // 重置校验字段
       this.$emit('update:showDialog', false) // 关闭
-      console.log(formm)
     },
     async getDepartDetail(id) {
       // console.log(id)  // id能查询到
