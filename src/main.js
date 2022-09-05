@@ -17,8 +17,16 @@ import '@/permission' // permission control
 
 // 引入公共组件
 import Commponent from '@/components'
+// 引入过滤器组件
+import * as filters from '@/filters' // 引入工具类
 
 import * as directives from '@/directives'
+
+//  注册全局过滤器
+Object.keys(filters).forEach((key) => {
+  // 注册过滤器
+  Vue.filter(key, filters[key])
+})
 
 Object.keys(directives).forEach((key) => {
   Vue.directive(key, directives[key])
