@@ -34,3 +34,27 @@ export function delEmployee(id) {
     method: 'delete'
   })
 }
+
+/**
+ *新增员工接口
+ */
+
+export function addEmployee(data) {
+  return request({
+    url: '/sys/user',
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * 导入员工的接口
+ */
+
+export function importEmployee(data) {
+  return request({
+    url: '/sys/user/batch',
+    method: 'POST',
+    data
+  })
+}
