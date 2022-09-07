@@ -50,6 +50,7 @@
 import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
 import addEmployee from './components/add-employee.vue'
+import { formatDate } from '@/filters'
 export default {
   components: {
     addEmployee
@@ -109,12 +110,16 @@ export default {
         // excel 是导出的参数
         const { rows } = await getEmployeeList({ page: 1, size: this.page.total })
         const data = this.formatJson(headers, rows)
+        const multiHeader = [['姓名', '主要信息', '', '', '', '', '部门']]
+        const merges = ['A1:A2', 'B1:F1', 'G1:G2']
         excel.export_json_to_excel({
           header: Object.keys(headers),
           data,
           filename: '员工信息表',
           autoWidth: true,
-          bookType: 'xlsx'
+          bookType: 'xlsx',
+          multiHeader, // 复杂表头
+          merges // 合并选项
         })
       })
     },
