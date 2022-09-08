@@ -1,10 +1,15 @@
-// 封装自定义指令模块
-
-// 解决图片加载404的问题
-export const imagerror = {
+export const imageerror = {
   inserted(dom, options) {
+    //   图片异常的逻辑
+    //  监听img标签的错误事件  因为图片加载失败 会触发  onerror事件
+    dom.src = dom.src || options.value
+
     dom.onerror = function () {
+      // 图片失败  赋值一个默认的图片
       dom.src = options.value
     }
+  },
+  componentUpdated(dom, options) {
+    dom.src = dom.src || options.value
   }
 }
