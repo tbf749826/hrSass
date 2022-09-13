@@ -43,7 +43,7 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="editRole(row.id)">角色</el-button>
               <el-button @click="deleteEmployee(row.id)" type="text" size="small">删除</el-button>
             </template>
           </el-table-column>
@@ -60,6 +60,7 @@
         <canvas ref="myCanvas" />
       </el-row>
     </el-dialog>
+    <assignRole ref="assignRole" :showRoleDialog.sync="showRoleDialog" :user-id="userId"></assignRole>
   </div>
 </template>
 
@@ -69,9 +70,11 @@ import EmployeeEnum from '@/api/constant/employees'
 import addEmployee from './components/add-employee.vue'
 import { formatDate } from '@/filters'
 import QrCode from 'qrcode'
+import assignRole from './components/assign-role.vue'
 export default {
   components: {
-    addEmployee
+    addEmployee,
+    assignRole
   },
   data() {
     return {
@@ -83,7 +86,9 @@ export default {
         total: 0 // 总数
       },
       showDialog: false,
-      showCodeDialog: false
+      showCodeDialog: false,
+      showRoleDialog: false,
+      userId: null
     }
   },
   created() {
@@ -157,10 +162,7 @@ export default {
           }
           return item[headers[key]]
         })
-        // ["132", '张三’， ‘’，‘’，‘’d]
       })
-      // return rows.map(item => Object.keys(headers).map(key => item[headers[key]]))
-      // 需要处理时间格式问题
     },
     showQrCode(url) {
       // url存在的情况下 才弹出层
@@ -175,6 +177,11 @@ export default {
       } else {
         this.$message.warning('该用户还未上传头像')
       }
+    },
+    async editRole(id) {
+      this.userId = id
+      await this.$refs.assignRole.getUserDetailById(id)
+      this.showRoleDialog = true
     }
   }
 }

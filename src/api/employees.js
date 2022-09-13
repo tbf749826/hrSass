@@ -81,9 +81,9 @@ export function getPersonalDetail(id) {
   })
 }
 
-/** *
+/**
  *  更新用户详情的基础信息
- * **/
+ */
 export function updatePersonal(data) {
   return request({
     url: `/employees/${data.userId}/personalInfo`,
@@ -92,10 +92,9 @@ export function updatePersonal(data) {
   })
 }
 
-/** **
+/**
  * 获取用户的岗位信息
- *
- * ****/
+ */
 export function getJobDetail(id) {
   return request({
     url: `/employees/${id}/jobs`
@@ -104,11 +103,21 @@ export function getJobDetail(id) {
 
 /**
  * 保存岗位信息
- * ****/
+ * /
 export function updateJob(data) {
   return request({
     url: `/employees/${data.userId}/jobs`,
     method: 'put',
+    data
+  })
+}
+/**
+ *员工分配角色
+ */
+export function assignRoles(data) {
+  return request({
+    url: '/sys/user/assignRoles',
+    method: 'PUT',
     data
   })
 }
