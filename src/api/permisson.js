@@ -48,3 +48,6 @@ export function getPermissionDetail(id) {
     url: `/sys/permission/${id}`
   })
 }
+/**
+ * 分配权限接口
+ */

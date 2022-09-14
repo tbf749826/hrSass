@@ -17,7 +17,10 @@ router.beforeEach(async (to, from, next) => {
     } else {
       // 其他页面直接可以进入
       if (!store.getters.userId) {
-        await store.dispatch('user/getUserInfo')
+        const { roles } = await store.dispatch('user/getUserInfo')
+        const routes = await store.dispatch('permission/filterRoutes', roles.menus)
+        router.addRoutes([...routes, { path: '*', redirect: '/404', hidden: true }]) // 添加到路由表
+        next(to.path)
       }
       next()
     }

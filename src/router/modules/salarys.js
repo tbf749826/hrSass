@@ -2,7 +2,7 @@ import Layout from '@/layout'
 
 export default {
   path: '/salarys',
-  // name: 'salarys',
+  name: 'salarys',
   component: Layout,
   children: [
     {

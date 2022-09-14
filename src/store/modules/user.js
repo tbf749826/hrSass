@@ -1,6 +1,7 @@
 // 引入本地存储模块，持久化处理
 import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth.js'
 import { login, getInfo, getUserDetailById } from '@/api/user.js'
+import { resetRouter } from '@/router'
 // 状态
 const state = {
   token: getToken(), // 初始化的同时获取本地存储中的token
@@ -47,6 +48,8 @@ const actions = {
     context.commit('REMOVE_TOKEN')
     // 删除用户信息
     context.commit('REMOVE_USER_INFO')
+    resetRouter()
+    context.commit('permission/setRoutes', [], { root: true })
   }
 }
 
