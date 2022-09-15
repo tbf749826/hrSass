@@ -22,6 +22,8 @@ import * as filters from '@/filters' // 引入工具类
 
 import * as directives from '@/directives'
 
+import checkPermission from '@/mixin/checkPermission'
+
 //  注册全局过滤器
 Object.keys(filters).forEach((key) => {
   // 注册过滤器
@@ -32,6 +34,8 @@ Object.keys(directives).forEach((key) => {
   Vue.directive(key, directives[key])
 })
 Vue.use(Commponent)
+
+Vue.mixin(checkPermission)
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

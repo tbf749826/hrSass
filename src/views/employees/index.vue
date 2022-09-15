@@ -44,7 +44,7 @@
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
               <el-button type="text" size="small" @click="editRole(row.id)">角色</el-button>
-              <el-button @click="deleteEmployee(row.id)" type="text" size="small">删除</el-button>
+              <el-button type="text" size="small" @click="deleteEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -54,7 +54,7 @@
         </el-row>
       </el-card>
     </div>
-    <addEmployee :showDialog.sync="showDialog"></addEmployee>
+    <addEmployee :show-dialog.sync="showDialog"></addEmployee>
     <el-dialog title="二维码" :visible.sync="showCodeDialog" @opened="showQrCode">
       <el-row type="flex" justify="center">
         <canvas ref="myCanvas" />

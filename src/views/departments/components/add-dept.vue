@@ -3,20 +3,20 @@
   <el-dialog title="新增部门" :visible="showDialog" @close="btnCancel">
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
-    <el-form label-width="120px" :model="formData" :rules="rules" ref="deptForm">
+    <el-form ref="deptForm" label-width="120px" :model="formData" :rules="rules">
       <el-form-item label="部门名称" prop="name">
-        <el-input style="width: 80%" placeholder="1-50个字符" v-model="formData.name" />
+        <el-input v-model="formData.name" style="width: 80%" placeholder="1-50个字符" />
       </el-form-item>
       <el-form-item label="部门编码" prop="code">
-        <el-input style="width: 80%" placeholder="1-50个字符" v-model="formData.code" />
+        <el-input v-model="formData.code" style="width: 80%" placeholder="1-50个字符" />
       </el-form-item>
       <el-form-item label="部门负责人" prpo="manager">
-        <el-select style="width: 80%" placeholder="请选择" value="" v-model="formData.manager" @focus="getEmployeeSimple">
+        <el-select v-model="formData.manager" style="width: 80%" placeholder="请选择" value="" @focus="getEmployeeSimple">
           <el-option v-for="item in peoples" :key="item.id" :label="item.username" :value="item.username" />
         </el-select>
       </el-form-item>
       <el-form-item label="部门介绍" prop="introduce">
-        <el-input style="width: 80%" placeholder="1-300个字符" type="textarea" :rows="3" v-model="formData.introduce" />
+        <el-input v-model="formData.introduce" style="width: 80%" placeholder="1-300个字符" type="textarea" :rows="3" />
       </el-form-item>
     </el-form>
     <!-- el-dialog有专门放置底部操作栏的 插槽  具名插槽 -->

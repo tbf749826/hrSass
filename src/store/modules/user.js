@@ -31,6 +31,7 @@ const actions = {
   // 调用login接口，如果成功将数据中的token存到vuex中
   async login(context, data) {
     const results = await login(data)
+    console.log(results)
     // 通过mutations将获取到的token 存到vuex中
     context.commit('SET_TOKEN', results)
     setTimeStamp()
