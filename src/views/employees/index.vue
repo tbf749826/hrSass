@@ -60,7 +60,7 @@
         <canvas ref="myCanvas" />
       </el-row>
     </el-dialog>
-    <assignRole ref="assignRole" :showRoleDialog.sync="showRoleDialog" :user-id="userId"></assignRole>
+    <assignRole ref="assignRole" :show-role-dialog.sync="showRoleDialog" :user-id="userId"></assignRole>
   </div>
 </template>
 

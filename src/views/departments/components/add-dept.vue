@@ -61,8 +61,10 @@ export default {
       const { depts } = await getDepartments()
       const isRepeat = false
       if (this.formData.id) {
+        // eslint-disable-next-line no-const-assign
         isRepeat = depts.some((item) => item.id != this.formData.id && item.code === code && value)
       } else {
+        // eslint-disable-next-line no-const-assign
         isRepeat = depts.some((item) => item.code === value && value)
       }
 
